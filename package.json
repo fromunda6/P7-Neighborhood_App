@@ -1,0 +1,28 @@
+{
+  "name": "P6-Website_Optimization",
+  "version": "1.0.0",
+  "description": "a. Google Analytics script does not need to be parser-blocking as it does not affect the view of the page\r \t\ti. Solution: add \"async\" property to associated script tag\r \t\tii. impact of change: reduces load time ~21ms\r \tb. print.css is currently render-blocking unconditionally, is only required is printing\r \t\ti. Solution: add \"media:print\" attribute-value to associated css link tag\r \t\tii. impact: before/after\r \tc. Project images are taken from external links accessed at each REFLOW/layout event additional to the initial\r \t\ti. Download, save and reference images locally. Then optimize (compress,etc)\r \t\tii. impact:\r \td. Minify and compress source code \r \t\ti. This will be done last thing, using Grunt",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fromunda6/P6-Website_Optimization.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fromunda6/P6-Website_Optimization/issues"
+  },
+  "homepage": "https://github.com/fromunda6/P6-Website_Optimization#readme",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-cssmin": "^1.0.2",
+    "grunt-contrib-htmlmin": "^2.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-nodeunit": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0"
+  }
+}
