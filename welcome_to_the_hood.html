@@ -1,16 +1,65 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>A starting point</title>
-  <link rel="stylesheet" type="text/css" src="css/bootstrap.css">
-  <script src="js/jquery-1.12.3.js" async></script>
-  <script src="text/javascript"></script>
-</head>
-<body>
-  <div>
+  <head>
+    <title>A starting point</title>
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width, initial-scale=1"> <!--ensuring device-responsive View-->
+    <link rel="stylesheet" type="text/css" src="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/hood.css">
+    <script src="js/jquery-1.12.3.js"></script>
+    <script src="js/knockout.js"></script>
+  </head>
+  <body>
+    <div class="body1">
+      <script type="text/javascript">
+        $("div").replaceWith("<div>this is jQuery latching onto your DOM<div>");
+      </script>
+    </div>
+    <br>
+    <p>Action plan-neghborhood App P7</p>
+    <ol>
+      <li style="color: red">Build an application, from "scratch"</li>
+    </ol>
+    <p>Objectives/What should the app do and/or include?</p>
+    <ol>
+      <li>An map of your neighborhood, with many caveats</li>
+      <li>that filters, is searchable, responds to input, handles user input</li>
+      <li>that is structured using knockout.js</li>
+    </ol>
+
+    <div id="map"></div><!--basic map implementation procedure taken from Google Maps-->
     <script type="text/javascript">
-      $("div").replaceWith("<div>this is jQuery<div>");
+      function initMap() {
+        var focus = {lat: 39.74, lng: -104.99};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: focus
+        });
+        var marker = new google.maps.Marker({
+          position: focus,
+          map: map
+        });
+      };
     </script>
-  </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&callback=initMap">
+    </script>
+
   </body>
 </html>
+
+<!-- What have you learned that you can do without referring to the internet? ... try to answer the following questions, and give examples -->
+
+<!-- What's a program? -->
+<!-- What are the fundamental constituents of a program?
+       -->
+<!-- What constitutes good web design? -->
+<!-- In what order does CSS apply style rules? -->
+<!-- What are the fundamental components of javascript -->
+<script type="text/javascript">
+  // object definition syntax?
+
+  // method syntax?
+
+
+</script>
+<!-- What is meant by object-oriented javascript? -->
