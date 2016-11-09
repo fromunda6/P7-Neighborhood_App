@@ -1,3 +1,8 @@
+<!-- to do:
+a). House your selected API features inside Ajax requests
+b). make background of app an image of place we're thinking of moving
+-->
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,13 +13,21 @@
     <link rel="stylesheet" type="text/css" href="css/hood.css">
     <script src="js/jquery-1.12.3.js"></script>
     <script src="js/knockout.js"></script>
+    <script src="js/script.js"></script>
   </head>
   <body>
-    <div class="body1">
-      <script type="text/javascript">
-        $("div").replaceWith("<div>this is jQuery latching onto your DOM<div>");
-      </script>
+    <div id=appendExamp>
     </div>
+
+    <form id="form-container" onsubmit="loadData()">
+      <label for="street">Street: </label>
+      <input type="text" id="street">
+      <label for="city">City: </label>
+      <input type="text" id="city">
+      <button id="submit-btn" type="submit">Submit</button>
+    </form> <!--attached to jquery variable $form-->
+    <!-- <img class="bgimg" src="images/ATTN_manager.svg"> -->
+
     <br>
     <p>Action plan-neghborhood App P7</p>
     <ol>
@@ -27,39 +40,19 @@
       <li>that is structured using knockout.js</li>
     </ol>
 
+    <!-- create JS-feature-containing DOM elements -->
+      <div id="wikipedia-links"></div>
+      <div id="nytimes-header"></div>
+      <div id="nytimes-articles"></div>
+      <div id="greeting"></div>
+      <div id="flashyBOX"></div>
+
+
     <div id="map"></div><!--basic map implementation procedure taken from Google Maps-->
-    <script type="text/javascript">
-      function initMap() {
-        var focus = {lat: 39.74, lng: -104.99};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: focus
-        });
-        var marker = new google.maps.Marker({
-          position: focus,
-          map: map
-        });
-      };
-    </script>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&callback=initMap">
     </script>
 
   </body>
 </html>
 
-<!-- What have you learned that you can do without referring to the internet? ... try to answer the following questions, and give examples -->
-
-<!-- What's a program? -->
-<!-- What are the fundamental constituents of a program?
-       -->
-<!-- What constitutes good web design? -->
-<!-- In what order does CSS apply style rules? -->
-<!-- What are the fundamental components of javascript -->
-<script type="text/javascript">
-  // object definition syntax?
-
-  // method syntax?
-
-
-</script>
-<!-- What is meant by object-oriented javascript? -->
