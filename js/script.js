@@ -1,7 +1,5 @@
-$("#appendExamp").replaceWith("this is jQuery latching onto your DOM");
-
 //define, encapsulate, ___?, DOM variables as jquery-dynamic:
-	var $form= $('#form-container');
+	var $form = $('#form-container');
 
 	function loadData() {
 		var $body = $('body');
@@ -15,16 +13,16 @@ $("#appendExamp").replaceWith("this is jQuery latching onto your DOM");
       	$wikiElem.text("");
       	$nytElem.text("");
 
-      	var $cityString=$('#street').val(); //collect the value of DOM element with id=street, in this case a form input
+    var $cityString=$('#street').val(); //collect the value of DOM element with id=street, in this case a form input
 		var $streetString=$('#city').val(); //" " " "
 		var address = $streetString + ', ' + $cityString;
 
 		$greeting.text('So you want to live at ' + address + '?');
 
-		var streetviewURL = 'http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + address + '';
+		// var streetviewURL = 'http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + address + '';
 
-		$body.append(streetviewURL);
-	}
+		// $body.append(streetviewURL);
+	};
 
 //define functions
     function initMap() {
@@ -42,14 +40,5 @@ $("#appendExamp").replaceWith("this is jQuery latching onto your DOM");
   // define JS-feature-containing DOM elements as jquery objects
    var $body = $('body');
 
-    function loadData() {
-      var $wikiElem = $('#wikipedia-links');
-      var $nytHeaderElem = $('#nytimes-header');
-      var $nytElem = $('#nytimes-articles');
-      var $greeting = $('#greeting');
-      var $flashyVAR = $('#flashyBOX');
-    }
+  loadData();
 
-  //IMPLEMENT
-loadData();
-initMap();

@@ -1,6 +1,18 @@
-<!-- to do:
-a). House your selected API features inside Ajax requests
+<!-- to do/add improve polish maximize bi:
+a). don't forget your sequencing, order of OPS; rather in the below code, the
 b). make background of app an image of place we're thinking of moving
+c). form elements - onhover: "please fill out this field"
+d). alt tags on images
+e). maps implementation something not quite right/complete
+f). OPTIMIZE and use Grunt
+
+II> REQUIRED/CHOSEN Inclusions per rubric/and per lessons learned:
+
+a). a text input field or dropdown menu that filters map markers and list items
+b). House your selected API features inside Ajax requests
+c). follow a MVMV (model-viewmodel-view) model per knockout.js to avoid manual DOM updates (those using vanillaJS or jquery)
+d). incremental HTML delivery (generic/unique) can speed up a page load slightly (see Python HTML flushing)
+
 -->
 
 <!DOCTYPE html>
@@ -16,8 +28,6 @@ b). make background of app an image of place we're thinking of moving
     <script src="js/script.js"></script>
   </head>
   <body>
-    <div id=appendExamp>
-    </div>
 
     <form id="form-container" onsubmit="loadData()">
       <label for="street">Street: </label>
@@ -29,16 +39,22 @@ b). make background of app an image of place we're thinking of moving
     <!-- <img class="bgimg" src="images/ATTN_manager.svg"> -->
 
     <br>
-    <p>Action plan-neghborhood App P7</p>
-    <ol>
-      <li style="color: red">Build an application, from "scratch"</li>
-    </ol>
-    <p>Objectives/What should the app do and/or include?</p>
-    <ol>
-      <li>An map of your neighborhood, with many caveats</li>
-      <li>that filters, is searchable, responds to input, handles user input</li>
-      <li>that is structured using knockout.js</li>
-    </ol>
+    <div>
+    <p id="test">Action plan-neghborhood App P7</p>
+      <ol>
+        <li style="color: red">Build an application, from "scratch"</li>
+      </ol>
+      <p>Objectives/What should the app do and/or include?</p>
+      <ol>
+        <li>An map of your neighborhood, with many caveats</li>
+        <li>that filters, is searchable, responds to input, handles user input</li>
+        <li>that is structured using knockout.js</li>
+      </ol>
+      <p>your app's map is goofed because you've tried to implement streetview location usage in maps.api standard, and something;s not agreeing</p>
+    </div>
+
+    <!-- provide DOM "hook" for maps API -->
+    <div id="map"></div>
 
     <!-- create JS-feature-containing DOM elements -->
       <div id="wikipedia-links"></div>
@@ -50,7 +66,10 @@ b). make background of app an image of place we're thinking of moving
 
     <div id="map"></div><!--basic map implementation procedure taken from Google Maps-->
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&callback=initMap">
+    </script>
+    <script type="text/javascript">
+      $("#test").append("<p>this is jQuery latching onto your DOM</p>");
     </script>
 
   </body>
