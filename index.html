@@ -8,9 +8,6 @@ f). OPTIMIZE and use Grunt
 
 II> REQUIRED/CHOSEN Inclusions per rubric/and per lessons learned:
 
-a). a text input field or dropdown menu that filters map markers and list items
-b). House your selected API features inside Ajax requests
-c). follow a MVMV (model-viewmodel-view) model per knockout.js to avoid manual DOM updates (those using vanillaJS or jquery)
 d). incremental HTML delivery (generic/unique) can speed up a page load slightly (see Python HTML flushing)
 
 -->
@@ -23,17 +20,15 @@ d). incremental HTML delivery (generic/unique) can speed up a page load slightly
     <meta name=viewport content="width=device-width, initial-scale=1"> <!--ensuring device-responsive View-->
     <link rel="stylesheet" type="text/css" src="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/hood.css">
-    <script src="js/jquery-1.12.3.js"></script>
     <script src="js/knockout.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/jquery-1.12.3.js"></script>
+
   </head>
   <body>
 
-    <form id="form-container" onsubmit="loadData()">
-      <label for="street">Street: </label>
-      <input type="text" id="street">
-      <label for="city">City: </label>
-      <input type="text" id="city">
+    <form id="form-container" class="form-container">
+      <label for="street">Street: </label><input type="text" id="street" value="">
+      <label for="city">City: </label><input type="text" id="city" value="">
       <button id="submit-btn" type="submit">Submit</button>
     </form> <!--attached to jquery variable $form-->
     <!-- <img class="bgimg" src="images/ATTN_manager.svg"> -->
@@ -50,7 +45,6 @@ d). incremental HTML delivery (generic/unique) can speed up a page load slightly
         <li>that filters, is searchable, responds to input, handles user input</li>
         <li>that is structured using knockout.js</li>
       </ol>
-      <p>your app's map is goofed because you've tried to implement streetview location usage in maps.api standard, and something;s not agreeing</p>
     </div>
 
     <!-- provide DOM "hook" for maps API -->
@@ -66,12 +60,11 @@ d). incremental HTML delivery (generic/unique) can speed up a page load slightly
 
     <div id="map"></div><!--basic map implementation procedure taken from Google Maps-->
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&callback=initMap">
-    </script>
     <script type="text/javascript">
-      $("#test").append("<p>this is jQuery latching onto your DOM</p>");
+      $("#test").append("<h1>this is jQuery latching onto your DOM</h1>");
     </script>
-
+    <script src="js/jquery-1.12.3.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>
 
