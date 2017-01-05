@@ -53,12 +53,16 @@ var mapView = {
 	render: function(){}
 };
 
-var dataView = {
-	init: function(){},
-	render: function(){}
+var infoView = {
+	init: function(){
+		//bind to DOM
+	},
+	render: function(){
+		//display
+	}
 };
 
-$("#form-container").submit(view.loadData);
+$("#form-container").submit(mapView.loadData);
 
 
 
