@@ -24,6 +24,7 @@ d). incremental HTML delivery (generic/unique) can speed up a page load slightly
     <script src="js/jquery-1.12.3.js"></script>
   </head>
   <body>
+  <!-- what follows is the VIEW as I understand its role and placement per knockout.js - the HTML layer containing only the visible elements data-bound to observable variables defined in the viewModel -->
     <form id="form-container" class="form-container">
       <label for="street">Street: </label><input type="text" id="street" value="">
       <label for="city">City: </label><input type="text" id="city" value="">
@@ -61,8 +62,8 @@ d). incremental HTML delivery (generic/unique) can speed up a page load slightly
     <script type="text/javascript">
       $("#test").append("<h1>this is jQuery latching onto your DOM</h1>");
     </script>
-    <script src="js/jquery-1.12.3.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/jquery-1.12.3.js" async></script>
+    <script src="js/script.js" async></script>
   </body>
 </html>
 

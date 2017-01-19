@@ -32,6 +32,7 @@ var controller = {
 
 };
 
+//
 var mapView = {
 
 	init: function(){},
@@ -53,7 +54,7 @@ var mapView = {
 	render: function(){}
 };
 
-var infoView = {
+var listView = {
 	init: function(){
 		//bind to DOM
 	},

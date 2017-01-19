@@ -21,7 +21,7 @@ from local or national news outlets,
 -learn/must use Knockout.js
 -
 
-#Floaters
+#How to use the Neighborhood app?
 
 
 
