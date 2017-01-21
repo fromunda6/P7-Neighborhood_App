@@ -1,0 +1,53 @@
+<!-- TODO, exclusive of all I've not thought of-refer to CC for structure, KO specifics:
+  a. encapsulate mapview inside mapView fxn or something
+  b. create listView, functionality therein and external connections to
+    i. filter connected to map that changes what markers and list items are viewable(use KO for anything of changing state)
+    ii. event-listen to clicks on list items , doing some/anything(?) in response
+  c. decide on at least 1other 3pAPIs to be included in app; presumably those will be housed in the modelView (?)
+  d. for each API req, encapsulate in jquery.ajax() method
+  e. tend to CSS(responsive design)
+  f. ID hyp app failures and impl contingency behavior-->
+
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to the hood</title>
+  <meta charset="utf-8">
+  <meta name=viewport content="width=device-width, initial-scale=1"> <!--ensuring device-responsive View-->
+  <link rel="stylesheet" type="text/css" src="css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/hood.css">
+  <script src="js/knockout.js"></script>
+  <script src="js/jquery-1.12.3.js"></script>
+  <!-- <script src="js/scriptNA.js"></script>  -->
+</head>
+<body>
+<!-- what follows is the VIEW as I understand its role and placement per principles of concern separation - the HTML layer containing only the visible elements data-bound to observable variables defined in the viewModel -->
+                      <!-- precede the dropdown menu with a "currentPlace" view comparable to that used in catClicker,
+                      which then can be bound  -->
+  <div id="listView"> <!-- replace the following with a dropdown menu, binding the elements therein to the map itself-->
+   <form id="form-container" class="form-container">
+      <label for="street">Street: </label><input type="text" id="street" value="">
+      <label for="city">City: </label><input type="text" id="city" value="">
+      <button id="submit-btn" type="submit">Submit</button>
+    </form>
+
+    <p>Action plan-neghborhood App P7</p>
+    <p>Objectives/What should the app do and/or include?</p>
+    <ol>
+        <li>An map, including and/or making use of:</li>
+        <li>a list of places(html-boxes w JS-data)</li>
+        <li>that is structured using knockout.js</li>
+    </ol>
+
+  </div>
+
+  <div id="map"></div>
+  <!-- building the area map & markers (corresponding to place-data) & animate a marker-->
+  <script src='js/scriptNA.js'></script>
+  <!-- map should be called only once, meaning ? onLoad() ?;  why would it load more than that? -->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&v=3&callback=initMap">
+  </script>
+</body>
+</html>
