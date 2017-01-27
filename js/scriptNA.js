@@ -1,6 +1,44 @@
+// per separating concerns, do not define your data within the view fxn, as is being done below; instead def outside and pass in
+var model = [{
+        name: 'Lithium Spring',
+        location: {
+            lat: 40.4883,
+            lng: -106.8484
+        }
+    },
+    {
+        name: "Johhny B Good's",
+        location: {
+            lat: 40.4860,
+            lng: -106.8341
+        }
+    },
+    {
+        name: 'CMC Frolf Course',
+        location: {
+            lat: 40.4952,
+            lng: -106.8391
+        }
+    },
+    {
+        name: 'Howelsen Hill',
+        location: {
+            lat: 40.4825,
+            lng: -106.8348
+        }
+    },
+    {
+        name: 'Bud Werner Memorial Library',
+        location: {
+            lat: 40.4890,
+            lng: -106.8402
+        }
+    }
+];
+
 var mapView;
 
-function mapView() {
+function initMap() {
 
     //create a styles array to use with the map
     var styles = [{
@@ -20,43 +58,6 @@ function mapView() {
         styles: styles,
         mapTypeControl: false
     });
-    // per separating concerns, do not define your data within the view fxn, as is being done below; instead def outside and pass in
-    var model = [{
-            name: 'Lithium Spring',
-            location: {
-                lat: 40.4883,
-                lng: -106.8484
-            }
-        },
-        {
-            name: "Johhny B Good's",
-            location: {
-                lat: 40.4860,
-                lng: -106.8341
-            }
-        },
-        {
-            name: 'CMC Frolf Course',
-            location: {
-                lat: 40.4952,
-                lng: -106.8391
-            }
-        },
-        {
-            name: 'Howelsen Hill',
-            location: {
-                lat: 40.4825,
-                lng: -106.8348
-            }
-        },
-        {
-            name: 'Bud Werner Memorial Library',
-            location: {
-                lat: 40.4890,
-                lng: -106.8402
-            }
-        }
-    ];
 
     document.getElementById('zoom-to-area').addEventListener('click', function() {
         zoomToArea();
@@ -89,9 +90,6 @@ function mapView() {
             // that was clicked
         });
     }
-
-    // this function doesn't yet exist
-    // map.fitBounds(bounds);
 
     //this fxn populates the infowindow when the marker is clicked:
     //notice also that when p.I.W. is called in the loop , marker = this, & infowindow = largeInfoWindow.  Upshot here is that
@@ -133,14 +131,13 @@ function zoomToArea() {
     }
 }
 
-// var Place =
 
 var viewModel = function(){
 	var self=this;
 
 	this.placeList = ko.observableArray([]);
 
-	mapView.model.forEach(function(modelItem){
+	model.forEach(function(modelItem){
 		self.placeList.push(modelItem);
 	});
 };

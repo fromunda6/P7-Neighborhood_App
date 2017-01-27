@@ -31,6 +31,11 @@
   </div>
 
   <div class="TODO">
+    <!-- data-bound list items -->
+    <div data-bind="foreach: placeList">
+      <h4 data-bind="text: name"></h2>
+    </div>
+
     <p>Main Features, or the "What"-the "How" is constrained by, but not precisely defined by, the "what":</p>
     <ol type="I">
       <li>by Default, user will be presented with all[5] locations in a listView and on map, the latter being animated on interact</li>
@@ -42,17 +47,14 @@
     </ol>
   </div>
 
-  <!-- data-bound list items -->
-  <div data-bind="foreach: placeList">
-    <h2 data-bind="text: placeName, click: $parent."></h2>
-  </div>
+
 
   <div id="map"></div>
   <!-- building the area map & markers (corresponding to place-data) & animate a marker-->
   <script src='js/scriptNA.js'></script>
   <!-- map should be called only once, meaning ? onLoad() ?;  why would it load more than that? -->
   <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&v=3&callback=mapView">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&v=3&callback=initMap">
   </script>
 </body>
 </html>
