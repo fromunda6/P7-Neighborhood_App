@@ -1,14 +1,14 @@
-<!-- TODO, exclusive of all I've not thought of-refer to CC for structure, KO specifics:
-  a. encapsulate mapview inside mapView fxn or something
-  b. create listView, functionality therein and external connections to
-    i. filter connected to map that changes what markers and list items are viewable(use KO for anything of changing state)
-    ii. event-listen to clicks on list items , doing some/anything(?) in response
-  c. decide on at least 1other 3pAPIs to be included in app; presumably those will be housed in the modelView (?)
+<!-- TODO, more specific than in-app proj.req's
+
+  b. per separation of concerns, create listView,mapView,model,viewModel(formerly known as controller) code sections.
+  c. for 'severe/impressive' detail on list/searching functionality, please see "Understanding API Services parts 20-21"
   d. for each API req, encapsulate in jquery.ajax() method
   e. tend to CSS(responsive design)
-  f. ID hyp app failures and impl contingency behavior-->
+  f. ID potential app failures and implement contingency behavior, could be as simple as(although 'status' is only geocode-recognized):
+  else {
+        alert('Geocode was not successful for the following reason: ' + status);
+          }-->
 
--->
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,23 +23,28 @@
 </head>
 <body>
 <!-- what follows is the VIEW as I understand its role and placement per principles of concern separation - the HTML layer containing only the visible elements data-bound to observable variables defined in the viewModel -->
-                      <!-- precede the dropdown menu with a "currentPlace" view comparable to that used in catClicker,
-                      which then can be bound  -->
-  <div id="listView"> <!-- replace the following with a dropdown menu, binding the elements therein to the map itself-->
-   <form id="form-container" class="form-container">
-      <label for="street">Street: </label><input type="text" id="street" value="">
-      <label for="city">City: </label><input type="text" id="city" value="">
-      <button id="submit-btn" type="submit">Submit</button>
-    </form>
 
-    <p>Action plan-neghborhood App P7</p>
-    <p>Objectives/What should the app do and/or include?</p>
-    <ol>
-        <li>An map, including and/or making use of:</li>
-        <li>a list of places(html-boxes w JS-data)</li>
-        <li>that is structured using knockout.js</li>
+  <div class="zoom-box">
+    <input id="zoom-to-area-text" type="text" placeholder="Enter your favorite area!">
+    <input id="zoom-to-area" type="button" value="Zoom">
+    <hr>
+  </div>
+
+  <div class="TODO">
+    <p>Main Features, or the "What"-the "How" is constrained by, but not precisely defined by, the "what":</p>
+    <ol type="I">
+      <li>by Default, user will be presented with all[5] locations in a listView and on map, the latter being animated on interact</li>
+      <!-- Knockout can be used in the below functionality to display the changing-state lcoation list -->
+      <li>a text input box, wired up to the listView, that will filter locations appearing on listView and MAP</li>
+      <!-- I'm thinking wikipedia for the 3pAPI - ('frolf' can be used instead of "CMC Steamboat frolf course" where an article does not exist-->
+      <li>location-specific info on click of map markers will be based on both pers knowledge(read:hard-coded) and as derived from a 3pAPI</li>
+      <li>error handling of some sort, asynchronously made api requests, device-responsive design</li>
     </ol>
+  </div>
 
+  <!-- data-bound list items -->
+  <div data-bind="foreach: placeList">
+    <h2 data-bind="text: placeName, click: $parent."></h2>
   </div>
 
   <div id="map"></div>
@@ -47,7 +52,7 @@
   <script src='js/scriptNA.js'></script>
   <!-- map should be called only once, meaning ? onLoad() ?;  why would it load more than that? -->
   <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&v=3&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&v=3&callback=mapView">
   </script>
 </body>
 </html>
