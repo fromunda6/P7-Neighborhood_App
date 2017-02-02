@@ -1,39 +1,40 @@
 // per separating concerns, do not define your data within the view fxn, as is being done below; instead def outside and pass in
-var model = [{
+var model = [
+		{
         name: 'Lithium Spring',
         location: {
-            lat: 40.4883,
-            lng: -106.8484
+        lat: 40.4883,
+        lng: -106.8484
         }
-    },
-    {
+    	},
+    	{
         name: "Johhny B Good's",
         location: {
-            lat: 40.4860,
-            lng: -106.8341
+        lat: 40.4860,
+        lng: -106.8341
         }
-    },
-    {
+    	},
+    	{
         name: 'CMC Frolf Course',
         location: {
-            lat: 40.4952,
-            lng: -106.8391
+        lat: 40.4952,
+        lng: -106.8391
         }
-    },
-    {
+    	},
+    	{
         name: 'Howelsen Hill',
         location: {
-            lat: 40.4825,
-            lng: -106.8348
+        lat: 40.4825,
+        lng: -106.8348
         }
-    },
-    {
+    	},
+    	{
         name: 'Bud Werner Memorial Library',
         location: {
-            lat: 40.4890,
-            lng: -106.8402
+        lat: 40.4890,
+        lng: -106.8402
         }
-    }
+    	}
 ];
 
 var mapView;
@@ -45,7 +46,7 @@ function initMap() {
         featureType: 'water',
         //no need for 'elementType' here as
         stylers: [{
-            color: '#de5222'
+            color: '#33cc00'
         }]
     }]
     //google constructor creates a new map - center and zoom values must be provided
@@ -76,7 +77,6 @@ function initMap() {
             map: mapView,
             position: position,
             title: name,
-            animation: google.maps.Animation.DROP,
             id: i
         });
         //push the marker to array of markers for further use(?)
@@ -86,9 +86,17 @@ function initMap() {
         //create an onclick event to open an infowindow at each marker:
         //except that it's always opening at the last array item - closure needed i think
         marker.addListener('click', function() {
-            populateInfoWindow(this, largeInfowindow); //where 'this' refers here the doodad (trying to avoid infomral use of "object")
-            // that was clicked
+            populateInfoWindow(this, largeInfowindow);
+            toggleBounce(this);
         });
+    }
+
+    function toggleBounce(marker){
+    	if (marker.getAnimation() !== null) {
+    		marker.setAnimation(null);
+    	} else {
+    		marker.setAnimation(google.maps.Animation.BOUNCE);
+    	}
     }
 
     //this fxn populates the infowindow when the marker is clicked:
@@ -131,6 +139,10 @@ function zoomToArea() {
     }
 }
 
+// First, provide request error and success messages based upon the presence of the 'google' variable
+var apiError = function(){
+	window.alert("So sorry - the requested resource failed to load.  Did you ask nicely?")
+};
 
 var viewModel = function(){
 	var self=this;
@@ -139,7 +151,13 @@ var viewModel = function(){
 
 	model.forEach(function(modelItem){
 		self.placeList.push(modelItem);
+		this.addEventListener('click', appender, false)
 	});
 };
 
+var appender = function(){
+	console.log(model.name);
+}
 ko.applyBindings(new viewModel);
+
+// Question: in generating an event listener for each item in a given array, I want to call a function upon click.

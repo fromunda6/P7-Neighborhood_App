@@ -1,14 +1,3 @@
-<!-- TODO, more specific than in-app proj.req's
-
-  b. per separation of concerns, create listView,mapView,model,viewModel(formerly known as controller) code sections.
-  c. for 'severe/impressive' detail on list/searching functionality, please see "Understanding API Services parts 20-21"
-  d. for each API req, encapsulate in jquery.ajax() method
-  e. tend to CSS(responsive design)
-  f. ID potential app failures and implement contingency behavior, could be as simple as(although 'status' is only geocode-recognized):
-  else {
-        alert('Geocode was not successful for the following reason: ' + status);
-          }-->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +8,6 @@
   <link rel="stylesheet" type="text/css" href="css/hood.css">
   <script src="js/knockout.js"></script>
   <script src="js/jquery-1.12.3.js"></script>
-  <!-- <script src="js/scriptNA.js"></script>  -->
 </head>
 <body>
 <!-- what follows is the VIEW as I understand its role and placement per principles of concern separation - the HTML layer containing only the visible elements data-bound to observable variables defined in the viewModel -->
@@ -33,7 +21,7 @@
   <div class="TODO">
     <!-- data-bound list items -->
     <div data-bind="foreach: placeList">
-      <h4 data-bind="text: name"></h2>
+      <h4 data-bind="text: name"></h4>
     </div>
 
     <p>Main Features, or the "What"-the "How" is constrained by, but not precisely defined by, the "what":</p>
@@ -50,11 +38,13 @@
 
 
   <div id="map"></div>
-  <!-- building the area map & markers (corresponding to place-data) & animate a marker-->
   <script src='js/scriptNA.js'></script>
-  <!-- map should be called only once, meaning ? onLoad() ?;  why would it load more than that? -->
+
+  <!-- map should be called only once, meaning use KO for anything subject to changing state(the listView), so that page reloads are not required -->
+  <!-- request Google map and provide error handling -->
   <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&v=3&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&v=3&callback=initMap" onerror="apiError()">
   </script>
+
 </body>
 </html>
