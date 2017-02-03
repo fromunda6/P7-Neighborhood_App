@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Welcome to the hood</title>
+  <title>Steamboat Springs - Hidden Gems</title>
   <meta charset="utf-8">
   <meta name=viewport content="width=device-width, initial-scale=1"> <!--ensuring device-responsive View-->
   <link rel="stylesheet" type="text/css" src="css/bootstrap.css">
@@ -21,7 +21,7 @@
   <div class="TODO">
     <!-- data-bound list items -->
     <div data-bind="foreach: placeList">
-      <h4 data-bind="text: name"></h4>
+      <h4 data-bind="text: name, click: toggleBounce"></h4>
     </div>
 
     <p>Main Features, or the "What"-the "How" is constrained by, but not precisely defined by, the "what":</p>

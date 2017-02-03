@@ -91,14 +91,6 @@ function initMap() {
         });
     }
 
-    function toggleBounce(marker){
-    	if (marker.getAnimation() !== null) {
-    		marker.setAnimation(null);
-    	} else {
-    		marker.setAnimation(google.maps.Animation.BOUNCE);
-    	}
-    }
-
     //this fxn populates the infowindow when the marker is clicked:
     //notice also that when p.I.W. is called in the loop , marker = this, & infowindow = largeInfoWindow.  Upshot here is that
     //functions allow us to 1) apply consistent programming to changing inputs.
@@ -110,11 +102,19 @@ function initMap() {
             infowindow.open(mapView, marker);
             //make sure the marker property is cleared if the infowindow is closed
             infowindow.addListener('closeclick', function() {
-                infowindow.setMarker(null);
+                infowindow.close();
             });
         }
     }
 }
+
+function toggleBounce(marker){
+    	if (marker.getAnimation() !== null) {
+    		marker.setAnimation(null);
+    	} else {
+    		marker.setAnimation(google.maps.Animation.BOUNCE);
+    	}
+    }
 
 function zoomToArea() {
     var geocoder = new google.maps.Geocoder();
@@ -144,6 +144,12 @@ var apiError = function(){
 	window.alert("So sorry - the requested resource failed to load.  Did you ask nicely?")
 };
 
+//not being used due to lack of understanding
+// var Place = function(data){  //addition of parameter here will allow us to create different cats whereas currently only Meowtown can be generated
+// 	this.name = ko.observable(data.name);
+// 	this.location = ko.observable(data.location);
+// }
+
 var viewModel = function(){
 	var self=this;
 
@@ -151,13 +157,9 @@ var viewModel = function(){
 
 	model.forEach(function(modelItem){
 		self.placeList.push(modelItem);
-		this.addEventListener('click', appender, false)
 	});
 };
 
-var appender = function(){
-	console.log(model.name);
-}
 ko.applyBindings(new viewModel);
 
 // Question: in generating an event listener for each item in a given array, I want to call a function upon click.
