@@ -37,7 +37,26 @@ var model = [
     	}
 ];
 
-var mapView;
+var viewModel = function(){
+	var self=this;
+
+	this.name = ko.observable(0);
+	this.placeList = ko.observableArray([]);
+
+	model.forEach(function(modelItem){
+		self.placeList.push(modelItem);
+	});
+};
+
+ko.applyBindings(new viewModel);
+
+var logger = function(){
+	console.log(this);
+}
+
+var map;
+
+var markers = [];
 
 function initMap() {
 
@@ -50,7 +69,7 @@ function initMap() {
         }]
     }]
     //google constructor creates a new map - center and zoom values must be provided
-    mapView = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
         center: {
             lat: 40.4850,
             lng: -106.8317
@@ -64,7 +83,7 @@ function initMap() {
         zoomToArea();
     });
 
-    var markers = [];
+    markers = [];
     var largeInfowindow = new google.maps.InfoWindow();
     var bounds = new google.maps.LatLngBounds();
 
@@ -74,11 +93,13 @@ function initMap() {
         var name = model[i].name;
 
         var marker = new google.maps.Marker({
-            map: mapView,
+            map: map,
             position: position,
             title: name,
-            id: i
+            id: i,
+            animation: null
         });
+
         //push the marker to array of markers for further use(?)
         markers.push(marker);
         //extend the boundaries of the map for each marker
@@ -99,7 +120,7 @@ function initMap() {
         if (infowindow.marker != marker) {
             infowindow.marker = marker;
             infowindow.setContent('<div>' + marker.title + '</div>');
-            infowindow.open(mapView, marker);
+            infowindow.open(map, marker);
             //make sure the marker property is cleared if the infowindow is closed
             infowindow.addListener('closeclick', function() {
                 infowindow.close();
@@ -109,10 +130,12 @@ function initMap() {
 }
 
 function toggleBounce(marker){
-    	if (marker.getAnimation() !== null) {
+    	if (marker.getAnimation(this) !== null) {
     		marker.setAnimation(null);
+    		console.log(marker);
     	} else {
     		marker.setAnimation(google.maps.Animation.BOUNCE);
+    		console.log(marker);
     	}
     }
 
@@ -120,7 +143,7 @@ function zoomToArea() {
     var geocoder = new google.maps.Geocoder();
     var adrezz = document.getElementById('zoom-to-area-text').value;
     if (adrezz == '') {
-        window.alert('you must enter an area, or address.  dipshit')
+        window.alert('you must enter an area, or address.')
     } else {
         geocoder.geocode({
             address: adrezz,
@@ -129,8 +152,8 @@ function zoomToArea() {
             }
         }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
-                mapView.setCenter(results[0].geometry.location);
-                mapView.setZoom(15);
+                map.setCenter(results[0].geometry.location);
+                map.setZoom(15);
             } else {
                 window.alert('We could not find that location - try' + //oh that's how we line jump?
                     'harder.');
@@ -144,22 +167,6 @@ var apiError = function(){
 	window.alert("So sorry - the requested resource failed to load.  Did you ask nicely?")
 };
 
-//not being used due to lack of understanding
-// var Place = function(data){  //addition of parameter here will allow us to create different cats whereas currently only Meowtown can be generated
-// 	this.name = ko.observable(data.name);
-// 	this.location = ko.observable(data.location);
-// }
 
-var viewModel = function(){
-	var self=this;
-
-	this.placeList = ko.observableArray([]);
-
-	model.forEach(function(modelItem){
-		self.placeList.push(modelItem);
-	});
-};
-
-ko.applyBindings(new viewModel);
 
 // Question: in generating an event listener for each item in a given array, I want to call a function upon click.

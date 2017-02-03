@@ -21,28 +21,16 @@
   <div class="TODO">
     <!-- data-bound list items -->
     <div data-bind="foreach: placeList">
-      <h4 data-bind="text: name, click: toggleBounce"></h4>
+      <h4 data-bind="text: name, click: logger"></h4>
     </div>
-
-    <p>Main Features, or the "What"-the "How" is constrained by, but not precisely defined by, the "what":</p>
-    <ol type="I">
-      <li>by Default, user will be presented with all[5] locations in a listView and on map, the latter being animated on interact</li>
-      <!-- Knockout can be used in the below functionality to display the changing-state lcoation list -->
-      <li>a text input box, wired up to the listView, that will filter locations appearing on listView and MAP</li>
-      <!-- I'm thinking wikipedia for the 3pAPI - ('frolf' can be used instead of "CMC Steamboat frolf course" where an article does not exist-->
-      <li>location-specific info on click of map markers will be based on both pers knowledge(read:hard-coded) and as derived from a 3pAPI</li>
-      <li>error handling of some sort, asynchronously made api requests, device-responsive design</li>
-    </ol>
   </div>
-
-
 
   <div id="map"></div>
   <script src='js/scriptNA.js'></script>
 
   <!-- map should be called only once, meaning use KO for anything subject to changing state(the listView), so that page reloads are not required -->
   <!-- request Google map and provide error handling -->
-  <script async defer
+  <script async
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&v=3&callback=initMap" onerror="apiError()">
   </script>
 
