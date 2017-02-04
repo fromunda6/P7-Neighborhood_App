@@ -10,18 +10,17 @@
   <script src="js/jquery-1.12.3.js"></script>
 </head>
 <body>
-<!-- what follows is the VIEW as I understand its role and placement per principles of concern separation - the HTML layer containing only the visible elements data-bound to observable variables defined in the viewModel -->
 
-  <div class="zoom-box">
-    <input id="zoom-to-area-text" type="text" placeholder="Enter your favorite area!">
-    <input id="zoom-to-area" type="button" value="Zoom">
-    <hr>
-  </div>
+<!-- To begin Search fxnality, replace zoom here with a KO text input bound to model, THAT invokes
+      a fxn in viewModel (listFilter or the like) that filters and changes visibility.  Still needing this latter bit -->
+<div class="input-box">
+  <p>Search: <input data-bind="value: searchCriteria"></p>
+</div>
 
   <div class="TODO">
     <!-- data-bound list items -->
     <div data-bind="foreach: placeList">
-      <h4 data-bind="text: name, click: toggleBounce"></h4>
+      <h4 data-bind="text: name, click: $parent.markerClick"></h4>
     </div>
   </div>
 

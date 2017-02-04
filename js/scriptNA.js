@@ -40,23 +40,24 @@ var model = [
 var viewModel = function(){
 	var self=this;
 
-	this.name = ko.observable(0);
-	this.placeList = ko.observableArray([]);
+	//create observable bound to search input box
+	self.searchCriteria = ko.observable("");
+
+	self.name = ko.observable("");
+	self.placeList = ko.observableArray([]);
+
+	//forces a click event on list items to behave as click event on associated map marker (which in turn invokes toggleBounce)
+	self.markerClick = function(location){
+		console.log(location);
+		google.maps.event.trigger(location.marker,'click');
+	}
 
 	model.forEach(function(modelItem){
 		self.placeList.push(modelItem);
 	});
 };
 
-ko.applyBindings(new viewModel);
-
-var logger = function(){
-	console.log(this);
-}
-
 var map;
-
-var markers = [];
 
 function initMap() {
 
@@ -68,6 +69,7 @@ function initMap() {
             color: '#33cc00'
         }]
     }]
+
     //google constructor creates a new map - center and zoom values must be provided
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -79,11 +81,6 @@ function initMap() {
         mapTypeControl: false
     });
 
-    document.getElementById('zoom-to-area').addEventListener('click', function() {
-        zoomToArea();
-    });
-
-    markers = [];
     var largeInfowindow = new google.maps.InfoWindow();
     var bounds = new google.maps.LatLngBounds();
 
@@ -100,66 +97,50 @@ function initMap() {
             animation: null
         });
 
-        //push the marker to array of markers for further use(?)
-        markers.push(marker);
+        //add markers as properties of model, making them accessible to click event handler on list items (<h4>)
+        model[i].marker = marker;
+
         //extend the boundaries of the map for each marker
         bounds.extend(marker.position);
-        //create an onclick event to open an infowindow at each marker:
-        //except that it's always opening at the last array item - closure needed i think
+
+        //create an onclick event to open an infowindow at each marker-note the closure entailed in encapsulating an anonymous fxn and necessary
+        //to associate a given click with the correct marker
         marker.addListener('click', function() {
             populateInfoWindow(this, largeInfowindow);
             toggleBounce(this);
         });
     }
 
-    //this fxn populates the infowindow when the marker is clicked:
-    //notice also that when p.I.W. is called in the loop , marker = this, & infowindow = largeInfoWindow.  Upshot here is that
-    //functions allow us to 1) apply consistent programming to changing inputs.
-    function populateInfoWindow(marker, infowindow) {
-        //check to make syre the infowindow is not currently opened on a marker we've not clicked
-        if (infowindow.marker != marker) {
-            infowindow.marker = marker;
-            infowindow.setContent('<div>' + marker.title + '</div>');
-            infowindow.open(map, marker);
-            //make sure the marker property is cleared if the infowindow is closed
-            infowindow.addListener('closeclick', function() {
-                infowindow.close();
-            });
-        }
+    //locating this invocation here is not coincidence; in order to add markers to model,
+    ko.applyBindings(new viewModel());
+}
+
+
+//this fxn populates the infowindow when the marker is clicked:
+//notice also that when p.I.W. is called in the loop , marker = this, & infowindow = largeInfoWindow.  Upshot here is that
+//functions allow us to 1) apply consistent programming to changing inputs.
+function populateInfoWindow(marker, infowindow) {
+    //check to make syre the infowindow is not currently opened on a marker we've not clicked
+    if (infowindow.marker != marker) {
+        infowindow.marker = marker;
+        infowindow.setContent('<div>' + marker.title + '</div>');
+        infowindow.open(map, marker);
+        //make sure the marker property is cleared if the infowindow is closed
+        infowindow.addListener('closeclick', function() {
+            infowindow.close();
+        });
     }
 }
 
-function toggleBounce(marker){
-    	if (marker.getAnimation(this) !== null) {
-    		marker.setAnimation(null);
-    		console.log(marker);
-    	} else {
-    		marker.setAnimation(google.maps.Animation.BOUNCE);
-    		console.log(marker);
-    	}
-    }
-
-function zoomToArea() {
-    var geocoder = new google.maps.Geocoder();
-    var adrezz = document.getElementById('zoom-to-area-text').value;
-    if (adrezz == '') {
-        window.alert('you must enter an area, or address.')
-    } else {
-        geocoder.geocode({
-            address: adrezz,
-            componentRestrictions: {
-                locality: 'Steamboat Springs'
-            }
-        }, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                map.setCenter(results[0].geometry.location);
-                map.setZoom(15);
-            } else {
-                window.alert('We could not find that location - try' + //oh that's how we line jump?
-                    'harder.');
-            }
-        });
-    }
+function toggleBounce(marker, event){
+	console.log(marker);
+	if (marker.animation !== null) {
+		marker.setAnimation(null);
+		console.log(marker);
+	} else {
+		marker.setAnimation(google.maps.Animation.BOUNCE);
+		console.log(marker);
+	}
 }
 
 // First, provide request error and success messages based upon the presence of the 'google' variable
