@@ -1,16 +1,25 @@
 html,body {
-      font-family: Arial, sans-serif;
+      font-family: Arial, serif;
       height: 100%;
       margin: 0;
       padding: 0;
-      /*background-color: #2f4f4f;*/
+      border: 0;
     }
+
+#input-box {
+      background-color: #d8eaf5;
+}
+
 #map {
       height: 100%;
-      width: 70%;
+      width: 80%;
       float: right;
     }
-.TODO {
+
+#view {
       float: left;
-      width: 30%;
+      width: 20%;
+      background-color: #2f4f4f;
     }
+
+/*building classes to hold */

@@ -13,11 +13,14 @@
 
 <!-- To begin Search fxnality, replace zoom here with a KO text input bound to model, THAT invokes
       a fxn in viewModel (listFilter or the like) that filters and changes visibility.  Still needing this latter bit -->
-<div class="input-box">
-  <p>Search: <input data-bind="value: searchCriteria"></p>
-</div>
 
-  <div class="TODO">
+
+  <div id="view">
+    <div id="input-box">
+      <!-- How to read KO bindings: In this case, "bind the VALUE of this input box to the viewModel property searchCriteria" -->
+      <p>Search: <input data-bind="value: searchCriteria"></p>
+      <p>Looking for <span data-bind="text: searchCriteria"> </span>?</p>
+    </div>
     <!-- data-bound list items -->
     <div data-bind="foreach: placeList">
       <h4 data-bind="text: name, click: $parent.markerClick"></h4>
@@ -28,7 +31,7 @@
   <script src='js/scriptNA.js'></script>
 
   <!-- map should be called only once, meaning use KO for anything subject to changing state(the listView), so that page reloads are not required -->
-  <!-- request Google map and provide error handling -->
+  <!-- request Google map and refer to error handling fxn-->
   <script async
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&v=3&callback=initMap" onerror="apiError()">
   </script>

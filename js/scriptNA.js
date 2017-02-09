@@ -37,12 +37,16 @@ var model = [
     	}
 ];
 
+// a function expression/anonymous function.  Creates closure, which in turns ensures inter-method variable access within viewModel,
+// where regular application of scope would otherwise prevent this access the alternate form, a fxn declaration/'normal' fxn, i.e.
+// 1 function viewModel(){}, offers no such benefit...
 var viewModel = function(){
 	var self=this;
 
 	//create observable bound to search input box
 	self.searchCriteria = ko.observable("");
 
+	//assign to observable the model name data; observable objects become functions to avoid browser compatibility issues
 	self.name = ko.observable("");
 	self.placeList = ko.observableArray([]);
 
@@ -111,8 +115,9 @@ function initMap() {
         });
     }
 
-    //locating this invocation here is not coincidence; in order to add markers to model,
-    ko.applyBindings(new viewModel());
+    //locating this invocation here is not coincidence; in order to add markers to model, it is helpful to have the assignment
+    //in place prior to executing the for loop that pushes the model items to the list, one at a time
+    ko.applyBindings(new viewModel(), document.getElementById('view'));
 }
 
 
@@ -120,7 +125,7 @@ function initMap() {
 //notice also that when p.I.W. is called in the loop , marker = this, & infowindow = largeInfoWindow.  Upshot here is that
 //functions allow us to 1) apply consistent programming to changing inputs.
 function populateInfoWindow(marker, infowindow) {
-    //check to make syre the infowindow is not currently opened on a marker we've not clicked
+    //check to make sure the infowindow is not currently opened on a marker we've not clicked
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
         infowindow.setContent('<div>' + marker.title + '</div>');
