@@ -46,7 +46,7 @@ var viewModel = function(){
 	self.name = ko.observable("");
 	self.placeList = ko.observableArray();
 
-	self.criteria = ko.observable(""); //set up monitoring of criteria, the value of wjat was typed into input box
+	self.itemToSearch = ko.observable(""); //set up monitoring of itemToSearch, the value of what was typed into input box
 
 	//creates a dependency wherby click events on list items behave as click event on associated map marker (which in turn invokes toggleBounce)
 	self.markerClick = function(location){
@@ -54,24 +54,27 @@ var viewModel = function(){
 		google.maps.event.trigger(location.marker,'click');
 	};
 
+	//for each item in the model array, push to KO observable array placeList a value that can elsewhere be referred to as modelItem(?)
 	model.forEach(function(modelItem){
 		self.placeList.push(modelItem);
 	});
 
-	self.search=function(criteria) {
+	self.search=function(items) {
 		alert("anything");
 		//placeList is an observable, use placeList() to access underlying array
 		for (var i=0; i<self.placeList().length; i++) {
-				//here reference modelItem, what is actually being pushed to the visible array, and create fallback for empty search
-			if(self.placeList()[i].name.toLowerCase().indexof(self.criteria.toLowerCase >= 0)) {
-				self.modelItem()[i].visible = true;
-			} else {
-				self.modelItem()[i].visible = false;
+			console.log(self.placeList()[i].name);
+			console.log(self.placeList()[i].name.toLowerCase().indexOf(items.toLowerCase));
+			console.log(items);
+					//here reference modelItem, what is actually being pushed to the visible array, and create fallback for empty search
+				if(self.placeList()[i].name.toLowerCase().indexOf(items.toLowerCase) >= 0) {
+					self.placeList()[i].setVisible = true;
+				} else {
+					self.placeList()[i].setVisible = false;
+			}
 		}
-	}
-};
-
-		// filter a computed observable built of the conjunction of placeList and searchCriteria
+	};
+		// filter a computed observable built of the conjunction of placeList and searchitemToSearch
 };
 
 // with help from the net community and jQuery- filter placelist in place upon submit button-click
@@ -140,7 +143,7 @@ function initMap() {
 
 //this fxn populates the infowindow when the marker is clicked:
 //notice also that when p.I.W. is called in the loop , marker = this, & infowindow = largeInfoWindow.  Upshot here is that
-//functions allow us to 1) apply consistent programming to changing inputs.
+//functions allow us to 1) apply consistent programming to changing itemToSearch.
 function populateInfoWindow(marker, infowindow) {
     //check to make sure the infowindow is not currently opened on a marker we've not clicked
     if (infowindow.marker != marker) {
