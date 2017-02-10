@@ -14,15 +14,15 @@
 <!-- To begin Search fxnality, replace zoom here with a KO text input bound to model, THAT invokes
       a fxn in viewModel (listFilter or the like) that filters and changes visibility.  Still needing this latter bit -->
 
-
+  <!-- refactoring View per ko element structure -->
   <div id="view">
     <form id="input-box">
       <!-- How to read KO bindings: In this case, "bind the VALUE of this input box to the viewModel property searchCriteria" -->
-      <p>Search: <input type="search" data-bind="value: criteria, valueUpdate: 'keyup'"><button data-bind="click: viewModel.search">Submit</button></p>
+      <p>Search: <input type="search" data-bind="value: criteria, valueUpdate: 'keyup'"><button data-bind="click: search">Submit</button></p>
     </form>
     <!-- data-bound list items -->
     <div id="list-item-box" data-bind="foreach: placeList">
-      <h4 id="list-items" data-bind="text: name, click: $parent.markerClick, visible: visible"></h4>
+      <h4 id="list-items" data-bind="text: name, click: $parent.markerClick"></h4>
     </div>
   </div>
 

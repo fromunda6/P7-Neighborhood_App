@@ -44,7 +44,7 @@ var viewModel = function(){
 	var self=this;
 	//assign to observable the model name data; observable objects become functions to avoid browser compatibility issues
 	self.name = ko.observable("");
-	self.placeList = ko.observableArray([]);
+	self.placeList = ko.observableArray();
 
 	self.criteria = ko.observable(""); //set up monitoring of criteria, the value of wjat was typed into input box
 
@@ -52,22 +52,24 @@ var viewModel = function(){
 	self.markerClick = function(location){
 		console.log(location);
 		google.maps.event.trigger(location.marker,'click');
-	}
+	};
 
 	model.forEach(function(modelItem){
 		self.placeList.push(modelItem);
 	});
 
-	viewModel.search=function(criteria) {
-	alert("anything");
-		for (var i=0; i<self.placeList.length; i++){
-		if(self.placeList[i].toLowerCase().indexof(criteria.toLowerCase()) >=0) {
-			self.placeList[i].visible(true);
-		} else {
-			self.placeList[i].visible(false);
-		};
-	};
-}
+	self.search=function(criteria) {
+		alert("anything");
+		//placeList is an observable, use placeList() to access underlying array
+		for (var i=0; i<self.placeList().length; i++) {
+				//here reference modelItem, what is actually being pushed to the visible array, and create fallback for empty search
+			if(self.placeList()[i].name.toLowerCase().indexof(self.criteria.toLowerCase >= 0)) {
+				self.modelItem()[i].visible = true;
+			} else {
+				self.modelItem()[i].visible = false;
+		}
+	}
+};
 
 		// filter a computed observable built of the conjunction of placeList and searchCriteria
 };
@@ -86,7 +88,7 @@ function initMap() {
         stylers: [{
             color: '#737cee'
         }]
-    }]
+    }];
 
     //google constructor creates a new map - center and zoom values must be provided
     map = new google.maps.Map(document.getElementById('map'), {
@@ -165,7 +167,7 @@ function toggleBounce(marker, event){
 
 // First, provide request error and success messages based upon the presence of the 'google' variable
 var apiError = function(){
-	window.alert("So sorry - the requested resource failed to load.  Did you ask nicely?")
+	window.alert("So sorry - the requested resource failed to load.  Did you ask nicely?");
 };
 
 
