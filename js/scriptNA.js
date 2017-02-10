@@ -42,15 +42,13 @@ var model = [
 // 1 function viewModel(){}, offers no such benefit...
 var viewModel = function(){
 	var self=this;
-
-	//create observable bound to search input box
-	self.searchCriteria = ko.observable("");
-
 	//assign to observable the model name data; observable objects become functions to avoid browser compatibility issues
 	self.name = ko.observable("");
 	self.placeList = ko.observableArray([]);
 
-	//forces a click event on list items to behave as click event on associated map marker (which in turn invokes toggleBounce)
+	self.criteria = ko.observable(""); //set up monitoring of criteria, the value of wjat was typed into input box
+
+	//creates a dependency wherby click events on list items behave as click event on associated map marker (which in turn invokes toggleBounce)
 	self.markerClick = function(location){
 		console.log(location);
 		google.maps.event.trigger(location.marker,'click');
@@ -59,7 +57,23 @@ var viewModel = function(){
 	model.forEach(function(modelItem){
 		self.placeList.push(modelItem);
 	});
+
+	viewModel.search=function(criteria) {
+	alert("anything");
+		for (var i=0; i<self.placeList.length; i++){
+		if(self.placeList[i].toLowerCase().indexof(criteria.toLowerCase()) >=0) {
+			self.placeList[i].visible(true);
+		} else {
+			self.placeList[i].visible(false);
+		};
+	};
+}
+
+		// filter a computed observable built of the conjunction of placeList and searchCriteria
 };
+
+// with help from the net community and jQuery- filter placelist in place upon submit button-click
+
 
 var map;
 
@@ -70,7 +84,7 @@ function initMap() {
         featureType: 'water',
         //no need for 'elementType' here as
         stylers: [{
-            color: '#33cc00'
+            color: '#737cee'
         }]
     }]
 
@@ -103,6 +117,8 @@ function initMap() {
 
         //add markers as properties of model, making them accessible to click event handler on list items (<h4>)
         model[i].marker = marker;
+        // add 'visible' boolean to the model to aid in filtering
+        model[i].visible = true;
 
         //extend the boundaries of the map for each marker
         bounds.extend(marker.position);
@@ -119,7 +135,6 @@ function initMap() {
     //in place prior to executing the for loop that pushes the model items to the list, one at a time
     ko.applyBindings(new viewModel(), document.getElementById('view'));
 }
-
 
 //this fxn populates the infowindow when the marker is clicked:
 //notice also that when p.I.W. is called in the loop , marker = this, & infowindow = largeInfoWindow.  Upshot here is that

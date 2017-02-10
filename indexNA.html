@@ -16,14 +16,13 @@
 
 
   <div id="view">
-    <div id="input-box">
+    <form id="input-box">
       <!-- How to read KO bindings: In this case, "bind the VALUE of this input box to the viewModel property searchCriteria" -->
-      <p>Search: <input data-bind="value: searchCriteria"></p>
-      <p>Looking for <span data-bind="text: searchCriteria"> </span>?</p>
-    </div>
+      <p>Search: <input type="search" data-bind="value: criteria, valueUpdate: 'keyup'"><button data-bind="click: viewModel.search">Submit</button></p>
+    </form>
     <!-- data-bound list items -->
-    <div data-bind="foreach: placeList">
-      <h4 data-bind="text: name, click: $parent.markerClick"></h4>
+    <div id="list-item-box" data-bind="foreach: placeList">
+      <h4 id="list-items" data-bind="text: name, click: $parent.markerClick, visible: visible"></h4>
     </div>
   </div>
 
