@@ -43,10 +43,10 @@ var model = [
 var viewModel = function(){
 	var self=this;
 	//assign to observable the model name data; observable objects become functions to avoid browser compatibility issues
-	self.name = ko.observable("");
+	self.name = ko.observable(null);
 	self.placeList = ko.observableArray();
 
-	self.itemToSearch = ko.observable(""); //set up monitoring of itemToSearch, the value of what was typed into input box
+	self.itemToSearch = ko.observable(null); //set up monitoring of itemToSearch, the value of what was typed into input box
 
 	//creates a dependency wherby click events on list items behave as click event on associated map marker (which in turn invokes toggleBounce)
 	self.markerClick = function(location){
@@ -54,31 +54,27 @@ var viewModel = function(){
 		google.maps.event.trigger(location.marker,'click');
 	};
 
-	//for each item in the model array, push to KO observable array placeList a value that can elsewhere be referred to as modelItem(?)
+	//for each item in the model array, push to KO observable array placeList a value that can elsewhere be accessed with modelItem(?)
 	model.forEach(function(modelItem){
 		self.placeList.push(modelItem);
 	});
 
-	self.search=function(items) {
+	self.search=function(itemToSearch) {
 		alert("anything");
 		//placeList is an observable, use placeList() to access underlying array
 		for (var i=0; i<self.placeList().length; i++) {
 			console.log(self.placeList()[i].name);
-			console.log(self.placeList()[i].name.toLowerCase().indexOf(items.toLowerCase));
-			console.log(items);
-					//here reference modelItem, what is actually being pushed to the visible array, and create fallback for empty search
-				if(self.placeList()[i].name.toLowerCase().indexOf(items.toLowerCase) >= 0) {
-					self.placeList()[i].setVisible = true;
-				} else {
-					self.placeList()[i].setVisible = false;
+			console.log(self.placeList()[i].name.toLowerCase().indexOf(itemToSearch.toLowerCase));
+			console.log(itemToSearch);
+				//here reference modelItem, what is actually being pushed to the visible array, and create fallback for empty search
+			if(self.placeList()[i].name.toLowerCase().indexOf(itemToSearch.toLowerCase) == -1) {
+				self.placeList()[i].name.style.visibility = "hidden";
+			} else {
+				self.placeList()[i].name.style.visibility = "visible";
 			}
 		}
 	};
-		// filter a computed observable built of the conjunction of placeList and searchitemToSearch
 };
-
-// with help from the net community and jQuery- filter placelist in place upon submit button-click
-
 
 var map;
 

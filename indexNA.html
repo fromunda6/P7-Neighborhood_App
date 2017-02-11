@@ -18,7 +18,7 @@
   <div id="view">
     <form data-bind="submit: search" id="input-box">
       <!-- How to read KO bindings: In this case, "bind the VALUE of this input box to the viewModel property searchCriteria" -->
-      <p>Search: <input data-bind="value: itemToSearch, valueUpdate: 'keyup'"><button type="submit">Submit</button></p>
+      <p>Search: <input data-bind="value: itemToSearch, valueUpdate: 'keyup'"><button>Submit</button></p>
     </form>
     <!-- data-bound list items -->
     <div id="list-item-box" data-bind="foreach: placeList">
