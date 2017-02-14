@@ -55,24 +55,24 @@ var viewModel = function(){
 	};
 
 	//for each item in the model array, push to KO observable array placeList a value that can elsewhere be accessed with modelItem(?)
-	model.forEach(function(modelItem){
-		self.placeList.push(modelItem);
+	model.forEach(function(place){
+		self.placeList.push(place);
 	});
 
 	self.search=function(itemToSearch) {
-		alert("anything");
+        var itemToSearch = self.itemToSearch().toLowerCase();
 		//placeList is an observable, use placeList() to access underlying array
-		for (var i=0; i<self.placeList().length; i++) {
-			console.log(self.placeList()[i].name);
-			console.log(self.placeList()[i].name.toLowerCase().indexOf(itemToSearch.toLowerCase));
-			console.log(itemToSearch);
-				//here reference modelItem, what is actually being pushed to the visible array, and create fallback for empty search
-			if(self.placeList()[i].name.toLowerCase().indexOf(itemToSearch.toLowerCase) == -1) {
-				self.placeList()[i].name.style.visibility = "hidden";
-			} else {
-				self.placeList()[i].name.style.visibility = "visible";
-			}
-		}
+        if(itemToSearch == null) {
+            alert("Please enter a search term")
+        } else {
+    		  for (var i=0; i<self.placeList().length; i++) {
+    			if(self.placeList()[i].name.toLowerCase().indexOf(itemToSearch) == -1) {
+                    console.log(itemToSearch); //the 'Hide' term
+    			} else {
+    				alert("?"); //the 'show' term
+    			}
+    		}
+        }
 	};
 };
 
