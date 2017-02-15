@@ -5,48 +5,67 @@ var model = [
         location: {
         lat: 40.4883,
         lng: -106.8484
-        }
+        },
+        visible: true
     	},
     	{
         name: "Johhny B Good's",
         location: {
         lat: 40.4860,
         lng: -106.8341
-        }
+        },
+        visible: true
     	},
     	{
         name: 'CMC Frolf Course',
         location: {
         lat: 40.4952,
         lng: -106.8391
-        }
+        },
+        visible: true
     	},
     	{
         name: 'Howelsen Hill',
         location: {
         lat: 40.4825,
         lng: -106.8348
-        }
+        },
+        visible: true
     	},
     	{
         name: 'Bud Werner Memorial Library',
         location: {
         lat: 40.4890,
         lng: -106.8402
-        }
+        },
+        visible: true
     	}
 ];
 
-// a function expression/anonymous function.  Creates closure, which in turns ensures inter-method variable access within viewModel,
-// where regular application of scope would otherwise prevent this access the alternate form, a fxn declaration/'normal' fxn, i.e.
-// 1 function viewModel(){}, offers no such benefit...
+var Place = function(data){
+    this.name = ko.observable(data.name);
+    this.location = data.location;
+    this.marker = data.marker;
+    this.visible = ko.computed(function(){
+        return true;
+        var itemToSearch = self.itemToSearch();
+        for(var i in viewModel.placeList){
+            console.log(placeList[i].name.toLowerCase().indexOf(itemToSearch.toLowerCase()))
+            if (placeList[i].name.toLowerCase().indexOf(itemToSearch.toLowerCase()) >=0){
+                return true;
+            } else {
+                return false;
+                }
+            }
+        });
+        // viewModel.itemToSearch.subscribe(viewModel.visible());
+};
+
 var viewModel = function(){
 	var self=this;
-	//assign to observable the model name data; observable objects become functions to avoid browser compatibility issues
-	self.name = ko.observable(null);
-	self.placeList = ko.observableArray();
 
-	self.itemToSearch = ko.observable(null); //set up monitoring of itemToSearch, the value of what was typed into input box
+	self.placeList = ko.observableArray([]);
+	self.itemToSearch = ko.observable(''); //set up monitoring of itemToSearch, the value of what was typed into input box
 
 	//creates a dependency wherby click events on list items behave as click event on associated map marker (which in turn invokes toggleBounce)
 	self.markerClick = function(location){
@@ -54,27 +73,15 @@ var viewModel = function(){
 		google.maps.event.trigger(location.marker,'click');
 	};
 
+
+
 	//for each item in the model array, push to KO observable array placeList a value that can elsewhere be accessed with modelItem(?)
 	model.forEach(function(place){
-		self.placeList.push(place);
+		self.placeList.push(new Place(place));
+        //if name.visible == true, marker.setVisible(true);
+        //else marker.setVisible(false);
 	});
-
-	self.search=function(itemToSearch) {
-        var itemToSearch = self.itemToSearch().toLowerCase();
-		//placeList is an observable, use placeList() to access underlying array
-        if(itemToSearch == null) {
-            alert("Please enter a search term")
-        } else {
-    		  for (var i=0; i<self.placeList().length; i++) {
-    			if(self.placeList()[i].name.toLowerCase().indexOf(itemToSearch) == -1) {
-                    console.log(itemToSearch); //the 'Hide' term
-    			} else {
-    				alert("?"); //the 'show' term
-    			}
-    		}
-        }
-	};
-};
+}
 
 var map;
 
