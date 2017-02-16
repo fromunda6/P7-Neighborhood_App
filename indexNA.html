@@ -19,9 +19,10 @@
     <form id="input-box" >
       <p>SearchBar: <input type="search" placeholder="Item to Search..." data-bind="textInput: itemToSearch"></p>
     </form>
-    <div id="list-item-box" data-bind="foreach: placeList">
-      <h4 id="list-items" data-bind="text: name, visible: $parent.search(), click: $parent.markerClick"></h4>
-    </div>
+    <ul id="list-item-box" data-bind="foreach: filteredPlaces">
+      <li id="list-items" data-bind="text: name, click: $parent.markerClick"></li>
+    </ul>
+    <div id="filler"></div>
   </div>
 
   <div id="map"></div>

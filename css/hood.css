@@ -1,26 +1,31 @@
 html,body {
-      font-family: Arial, serif;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      border: 0;
-    }
+  font-family: Arial, serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
 
 #input-box {
-      background-color: #d8eaf5;
-      white-space: nowrap;
+  background-color: #d8eaf5;
+  white-space: nowrap;
 }
 
 #map {
-      height: 100%;
-      width: 76%;
-      float: right;
-    }
+  height: 100%;
+  width: 76%;
+  float: right;
+}
 
 #view {
-      float: left;
-      width: 24%;
-      background-color: #2f4f4f;
-    }
+  float: left;
+  width: 24%;
+  background-color: #2f4f4f;
+}
+
+#filler {
+  height: 50%;
+  background-color: blue;
+}
 
 /*building classes to hold */
