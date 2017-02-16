@@ -1,91 +1,95 @@
-// per separating concerns, do not define your data within the view fxn, as is being done below; instead def outside and pass in
 
+//organize data into an array, make observable
+places = ko.observableArray([
+{
+    name: 'Lithium Spring',
+    location: {
+        lat: 40.4883,
+        lng: -106.8484
+    }
+},
+{
+    name: "Johnny B Good's",
+    location: {
+        lat: 40.4860,
+        lng: -106.8341
+    }
+},
+{
+    name: 'CMC Frolf Course',
+    location: {
+        lat: 40.4952,
+        lng: -106.8391
+    }
+},
+{
+    name: 'Howelsen Hill',
+    location: {
+        lat: 40.4825,
+        lng: -106.8348
+    }
+},
+{
+    name: 'Bud Werner Memorial Library',
+    location: {
+        lat: 40.4890,
+        lng: -106.8402
+    }
+}
+]);
+
+//setup Place constructor function in adherence with good OOJS
 var Place = function(data){
-    this.name = data.name;
+    this.name = data.name; //data-bound to <li> within <ul>
     this.location = data.location;
     this.marker = data.marker;
-    this.isVisible = ko.observable(true);
 };
 
+//define viewModel, the functionality underlying the visible portion(<HTML>) of app
 var viewModel = function(){
-	var self=this;
+    //assign to variable self the value of this, in effect making "self" a static reference to the viewModel
+    var self=this;
 
-    self.places = ko.observableArray([
-    {
-        name: 'Lithium Spring',
-        location: {
-            lat: 40.4883,
-            lng: -106.8484
-        },
-        visible: true
-    },
-    {
-        name: "Johhny B Good's",
-        location: {
-            lat: 40.4860,
-            lng: -106.8341
-        },
-        visible: true
-    },
-    {
-        name: 'CMC Frolf Course',
-        location: {
-            lat: 40.4952,
-            lng: -106.8391
-        },
-        visible: true
-    },
-    {
-        name: 'Howelsen Hill',
-        location: {
-            lat: 40.4825,
-            lng: -106.8348
-        },
-        visible: true
-    },
-    {
-        name: 'Bud Werner Memorial Library',
-        location: {
-            lat: 40.4890,
-            lng: -106.8402
-        },
-        visible: true
-    }
-    ]);
-    self.placeList = ko.observableArray([]);
-    self.itemToSearch = ko.observable(''); //set up monitoring of itemToSearch, the value of what was typed into input box
+    //define itemToSearch as observable array and viewModel method that simply retrieves itemToSearch
+    self.itemToSearch = ko.observable('');
 
+    // define filteredPlaces as viewModel method data-bound to <ul> and returning only the names of those child elements <li> satisfying the
+    // following logic: IF(search is empty){return entire list}; ELSE{return those place names having strings in common with search term}
     self.filteredPlaces = ko.computed(function(){
-        if (!self.itemToSearch()){
-            return self.places()
+          //thanks to Sarah M for following logic
+            places().forEach(function(place){
+                if(place.marker){
+                    place.marker.setVisible(true);
+            }
+        })
+        if (self.itemToSearch()=="" || !self.itemToSearch()) {
+            return places()
+
         } else {
-            return ko.utils.arrayFilter(self.places(),function(place){
-                console.log(self.itemToSearch().toLowerCase().indexOf() !== -1);
-                return (place.name.toLowerCase().indexOf(self.itemToSearch().toLowerCase()) !== -1)
+            return ko.utils.arrayFilter(places(),function(place){
+                var hit = place.name.toLowerCase().indexOf(self.itemToSearch().toLowerCase()) !== -1;
+                place.marker.setVisible(hit);
+                return (place.name.toLowerCase().indexOf(self.itemToSearch().toLowerCase()) !== -1);
             })
         }
+
+        // if (places()[i]) {
+        //         console.log(place.name);
+        //         places()[i].marker.setVisible(true);
+        //      } else {
+        //         places()[i].marker.setVisible(false);
+        //      }
     });
-    // self.search=ko.observable(false);
 
-
-    //creates a dependency wherby click events on list items behave as click event on associated map marker (which in turn invokes toggleBounce)
+    //creates a dependency whereby click events on list items behave as click event on associated map marker (which in turn invokes toggleBounce)
     self.markerClick = function(location){
         console.log(location);
         google.maps.event.trigger(location.marker,'click');
     };
 
-        //for each item in the model array, push to KO observable array placeList a value that can elsewhere be accessed with modelItem(?)
-    self.places().forEach(function(place){
-        self.placeList.push(new Place(place));
-        //if name.displayed == true, marker.setVisible(true);
-        //else marker.setVisible(false);
-    });
-
-
     //create a styles array to use with the map
     var styles = [{
         featureType: 'water',
-        //no need for 'elementType' here as
         stylers: [{
             color: '#737cee'
         }]
@@ -110,9 +114,9 @@ var viewModel = function(){
         var bounds = new google.maps.LatLngBounds();
 
         //create an array of markers
-        for (var i = 0; i < self.places().length; i++) {
-            var position = self.places()[i].location; //remember scoping and local access-var's must be defined locally for the sake of Markers creation
-            var name = self.places()[i].name;
+        for (var i = 0; i < places().length; i++) {
+            var position = places()[i].location; //remember scoping and local access-var's must be defined locally for the sake of Markers creation
+            var name = places()[i].name;
 
             var marker = new google.maps.Marker({
                 map: map,
@@ -123,9 +127,7 @@ var viewModel = function(){
             });
 
             //add markers as properties of self.places(), making them accessible to click event handler on list items (<h4>)
-            self.places()[i].marker = marker;
-            // add 'visible' boolean to the self.places() to aid in filtering
-            self.places()[i].visible = true;
+            places()[i].marker = marker;
 
             //extend the boundaries of the map for each marker
             bounds.extend(marker.position);
@@ -136,12 +138,11 @@ var viewModel = function(){
                 populateInfoWindow(this, largeInfowindow);
                 toggleBounce(this);
             });
+
         }
     }
 
 }
-
-
 
 function initMap() {
 

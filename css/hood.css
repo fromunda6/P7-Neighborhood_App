@@ -4,6 +4,7 @@ html,body {
   margin: 0;
   padding: 0;
   border: 0;
+  background-color: #7f2020;
 }
 
 #input-box {
@@ -23,9 +24,5 @@ html,body {
   background-color: #2f4f4f;
 }
 
-#filler {
-  height: 50%;
-  background-color: blue;
-}
 
 /*building classes to hold */
