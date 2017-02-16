@@ -1,45 +1,45 @@
 // per separating concerns, do not define your data within the view fxn, as is being done below; instead def outside and pass in
 var model = [
-		{
+    {
         name: 'Lithium Spring',
         location: {
         lat: 40.4883,
         lng: -106.8484
         },
         visible: true
-    	},
-    	{
+      },
+      {
         name: "Johhny B Good's",
         location: {
         lat: 40.4860,
         lng: -106.8341
         },
         visible: true
-    	},
-    	{
+      },
+      {
         name: 'CMC Frolf Course',
         location: {
         lat: 40.4952,
         lng: -106.8391
         },
         visible: true
-    	},
-    	{
+      },
+      {
         name: 'Howelsen Hill',
         location: {
         lat: 40.4825,
         lng: -106.8348
         },
         visible: true
-    	},
-    	{
+      },
+      {
         name: 'Bud Werner Memorial Library',
         location: {
         lat: 40.4890,
         lng: -106.8402
         },
         visible: true
-    	}
+      }
 ];
 
 var Place = function(data){
@@ -50,18 +50,18 @@ var Place = function(data){
 };
 
 var viewModel = function(){
-	var self=this;
+  var self=this;
 
     // self.search=ko.observable(false);
 
-	self.placeList = ko.observableArray([]);
-	self.itemToSearch = ko.observable(''); //set up monitoring of itemToSearch, the value of what was typed into input box
+  self.placeList = ko.observableArray([]);
+  self.itemToSearch = ko.observable(''); //set up monitoring of itemToSearch, the value of what was typed into input box
 
-	//creates a dependency wherby click events on list items behave as click event on associated map marker (which in turn invokes toggleBounce)
-	self.markerClick = function(location){
-		console.log(location);
-		google.maps.event.trigger(location.marker,'click');
-	};
+  //creates a dependency wherby click events on list items behave as click event on associated map marker (which in turn invokes toggleBounce)
+  self.markerClick = function(location){
+    console.log(location);
+    google.maps.event.trigger(location.marker,'click');
+  };
 
         //for each item in the model array, push to KO observable array placeList a value that can elsewhere be accessed with modelItem(?)
     model.forEach(function(place){
@@ -162,19 +162,19 @@ function populateInfoWindow(marker, infowindow) {
 }
 
 function toggleBounce(marker, event){
-	console.log(marker);
-	if (marker.animation !== null) {
-		marker.setAnimation(null);
-		console.log(marker);
-	} else {
-		marker.setAnimation(google.maps.Animation.BOUNCE);
-		console.log(marker);
-	}
+  console.log(marker);
+  if (marker.animation !== null) {
+    marker.setAnimation(null);
+    console.log(marker);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    console.log(marker);
+  }
 }
 
 // First, provide request error and success messages based upon the presence of the 'google' variable
 var apiError = function(){
-	window.alert("So sorry - the requested resource failed to load.  Did you ask nicely?");
+  window.alert("So sorry - the requested resource failed to load.  Did you ask nicely?");
 };
 
 
