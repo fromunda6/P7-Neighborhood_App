@@ -2,7 +2,7 @@
 //organize data into an array, make observable
 places = ko.observableArray([
 {
-    name: 'Lithium Spring',
+    name: 'Lithia Spring',
     location: {
         lat: 40.4883,
         lng: -106.8484
@@ -66,6 +66,9 @@ var viewModel = function(){
             return places()
 
         } else {
+
+            // ko.arrayFilter takes as input the array of interest and a fxn operating on each
+            //element therein and returning that element IF fxn returns true
             return ko.utils.arrayFilter(places(),function(place){
                 var hit = place.name.toLowerCase().indexOf(self.itemToSearch().toLowerCase()) !== -1;
                 place.marker.setVisible(hit);
@@ -73,12 +76,6 @@ var viewModel = function(){
             })
         }
 
-        // if (places()[i]) {
-        //         console.log(place.name);
-        //         places()[i].marker.setVisible(true);
-        //      } else {
-        //         places()[i].marker.setVisible(false);
-        //      }
     });
 
     //creates a dependency whereby click events on list items behave as click event on associated map marker (which in turn invokes toggleBounce)
@@ -179,8 +176,12 @@ function toggleBounce(marker, event){
 }
 
 // First, provide request error and success messages based upon the presence of the 'google' variable
-var apiError = function(){
-	window.alert("So sorry - the requested resource failed to load.  Did you ask nicely?");
+var apiErrorGoogle = function(){
+    window.alert("So sorry - the Google resources failed to load.  Did you ask nicely?");
+};
+
+var apiErrorWiki = function(){
+    window.alert("So sorry - the Wikipedia resources failed to load.  Did you ask nicely?");
 };
 
 

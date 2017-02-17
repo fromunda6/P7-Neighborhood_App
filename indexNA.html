@@ -4,8 +4,8 @@
   <title>Steamboat Springs - Hidden Gems</title>
   <meta charset="utf-8">
   <meta name=viewport content="width=device-width, initial-scale=1"> <!--ensuring device-responsive View-->
-  <link rel="stylesheet" type="text/css" src="css/bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="css/hood.css">
+  <link rel="stylesheet" type="text/css" src="css/bootstrap.css"/>
+  <link rel="stylesheet" type="text/css" href="css/hood.css"/>
   <script src="js/knockout.js"></script>
   <script src="js/jquery-1.12.3.js"></script>
 </head>
@@ -15,13 +15,18 @@
 
   <!-- refactoring View per KO element structure -->
 
-  <div id="view">
+  <div id="view-left">
     <form id="input-box" >
       <p>SearchBar: <input type="search" placeholder="Item to Search..." data-bind="textInput: itemToSearch"></p>
     </form>
-    <ul id="list-item-box" data-bind="foreach: filteredPlaces">
-      <li id="list-items" data-bind="text: name, click: $parent.markerClick"></li>
+    <ul class="list-group-item-info" id="list-item-box" data-bind="foreach: filteredPlaces">
+      <li class="list-group-item-info" data-bind="text: name, click: $parent.markerClick"></li>
     </ul>
+  </div>
+
+  <div id="attribution-small">
+    <p>This page built with <a href="https://developers.google.com/maps/">Google Maps API</a><br>and the <a href="https://www.mediawiki.org/wiki/API:Main_page">Wikipedia API</a></p>
+    <p></p>
   </div>
 
   <div id="map"></div>
@@ -30,8 +35,10 @@
   <!-- map should be called only once, meaning use KO for anything subject to changing state(the listView), so that page reloads are not required -->
   <!-- request Google map and refer to error handling fxn-->
   <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&v=3&callback=initMap" onerror="apiError()">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&v=3&callback=initMap" onerror="apiErrorGoogle()">
   </script>
+  <!-- request Wikipedia api -->
+  <script async src="https://en.wikipedia.org/w/api.php?action=query&titles=Main%20Page&prop=revisions&rvprop=content&format=json" onerror="apiErrorWiki()"></script>
 
 </body>
 </html>

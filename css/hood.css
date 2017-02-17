@@ -2,7 +2,7 @@ html,body {
   font-family: Arial, serif;
   height: 100%;
   margin: 0;
-  padding: 0;
+  padding: 4pt;
   border: 0;
   background-color: #7f2020;
 }
@@ -10,6 +10,7 @@ html,body {
 #input-box {
   background-color: #d8eaf5;
   white-space: nowrap;
+  border-radius: 0.25em;
 }
 
 #map {
@@ -18,11 +19,24 @@ html,body {
   float: right;
 }
 
-#view {
+#view-left {
   float: left;
   width: 24%;
-  background-color: #2f4f4f;
+  border-radius: 0.2em;
+  background-color: #c8ea67;
 }
 
+.list-group-item-info {
+  color: #31708f;
+  background-color: #d9edf7;
+}
+
+#attribution-small {
+  position: absolute;
+  float: left;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
 
 /*building classes to hold */
