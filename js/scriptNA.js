@@ -132,6 +132,10 @@ var viewModel = function(){
             //create an onclick event to open an infowindow at each marker-note the closure entailed in encapsulating an anonymous fxn and necessary
             //to associate a given click with the correct marker
             marker.addListener('click', function() {
+                //CLARIFICATION:
+                //helpful to maintain here the distinction between parameters and arguments - parameters are variables
+                //named "whatever" and used within the fxn definition as placeholders for the arguments (resolvable values)
+                //passed to the fxn at time of calling and determining its final output
                 populateInfoWindow(this, largeInfowindow);
                 toggleBounce(this);
             });
@@ -148,8 +152,9 @@ function initMap() {
     ko.applyBindings(new viewModel());
 }
 
-//this fxn populates the infowindow when the marker is clicked:
-//notice also that when p.I.W. is called in the loop , marker = this, & infowindow = largeInfoWindow.  Upshot here is that
+//this fxn is called above when the marker is clicked:
+
+//notice also that when p.I.W. is called in the loop , marker = this(=marker), & infowindow = largeInfoWindow.  Upshot here is that
 //functions allow us to 1) apply consistent programming to changing itemToSearch.
 function populateInfoWindow(marker, infowindow) {
     //check to make sure the infowindow is not currently opened on a marker we've not clicked
