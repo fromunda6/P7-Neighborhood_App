@@ -35,6 +35,7 @@ places = ko.observableArray([
         lat: 40.4890,
         lng: -106.8402
     }
+    // lookup:
 }
 ]);
 
@@ -80,7 +81,6 @@ var viewModel = function(){
 
     //creates a dependency whereby click events on list items behave as click event on associated map marker (which in turn invokes toggleBounce)
     self.markerClick = function(location){
-        console.log(location);
         google.maps.event.trigger(location.marker,'click');
     };
 
@@ -153,14 +153,24 @@ function initMap() {
 }
 
 //this fxn is called above when the marker is clicked:
-
 //notice also that when p.I.W. is called in the loop , marker = this(=marker), & infowindow = largeInfoWindow.  Upshot here is that
 //functions allow us to 1) apply consistent programming to changing itemToSearch.
 function populateInfoWindow(marker, infowindow) {
+  var wikiITem=marker.title;
+  var CORSurl = "https://en.wikipedia.org/w/api.php?action=query&prop=images&titles="+wikiITem+"&format=json";
+  $.ajax({
+    url: CORSurl,
+    dataType: 'jsonp',
+    headers: { 'Api-User-Agent': 'Example/1.0' },
+    success: function(json){
+      console.log(json);
+      $('<#view-left>').append(json);
+    }
+  });
     //check to make sure the infowindow is not currently opened on a marker we've not clicked
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
-        infowindow.setContent('<div>' + marker.title + '</div>');
+        // infowindow.setContent('<div>' + query.search[i].title + '</div>');
         infowindow.open(map, marker);
         //make sure the marker property is cleared if the infowindow is closed
         infowindow.addListener('closeclick', function() {
@@ -170,13 +180,10 @@ function populateInfoWindow(marker, infowindow) {
 }
 
 function toggleBounce(marker, event){
-	console.log(marker);
 	if (marker.animation !== null) {
 		marker.setAnimation(null);
-		console.log(marker);
 	} else {
 		marker.setAnimation(google.maps.Animation.BOUNCE);
-		console.log(marker);
 	}
 }
 
