@@ -9,7 +9,6 @@ html,body {
 
 #input-box {
   background-color: #d8eaf5;
-  white-space: nowrap;
   border-radius: 0.25em;
 }
 
@@ -20,13 +19,13 @@ html,body {
 
 #map {
   height: 100%;
-  width: 76%;
+  width: 70%;
   float: right;
 }
 
 #view-left {
   float: left;
-  width: 24%;
+  width: 30%;
   border-radius: 0.2em;
   background-color: #c8ea67;
 }

@@ -1,4 +1,15 @@
+//That which remains:
+
+    //CSS is haphazardly implemented and not really in your control.
+        //please refactor, building with more intent a responsive design
+    //Manipulation of the DOM to incorporate WIKI information must be done via KO rather than jquery or vanilla js
+        //setup wikiExtract/container as DOM element text-data-bound to page.extract . . . not quite clear on this
+    //Error handling on wiki API does not exist.  Use 'error' callback below or at bottom of(?) wiki.success()
+
+
 //organize data into an array, make observable
+var markers = [];
+
 places = ko.observableArray([{
         name: 'Lithia Spring',
         location: {
@@ -75,7 +86,7 @@ var viewModel = function() {
             return ko.utils.arrayFilter(places(), function(place) {
                 var hit = place.name.toLowerCase().indexOf(self.itemToSearch().toLowerCase()) !== -1;
                 place.marker.setVisible(hit);
-                return (place.name.toLowerCase().indexOf(self.itemToSearch().toLowerCase()) !== -1);
+                return hit;
             })
         }
 
@@ -112,7 +123,6 @@ var viewModel = function() {
 
         var largeInfowindow = new google.maps.InfoWindow();
         var bounds = new google.maps.LatLngBounds();
-
         //create an array of markers
         for (var i = 0; i < places().length; i++) {
             var position = places()[i].location; //remember scoping and local access-var's must be defined locally for the sake of Markers creation
@@ -129,6 +139,7 @@ var viewModel = function() {
                 animation: null
             });
 
+            markers.push(marker);
             //add markers as properties of self.places(), making them accessible to click event handler on list items (<h4>)
             places()[i].marker = marker;
 
@@ -197,12 +208,15 @@ function populateInfoWindow(marker, infowindow) {
 }
 
 function toggleBounce(marker, event) {
+    for (var i = markers.length - 1; i >= 0; i--) {
+        markers[i].setAnimation(null);
+    }
     if (marker.animation !== null) {
         marker.setAnimation(null);
     } else {
-        marker.setAnimation(google.maps.Animation.BOUNCE);
+            marker.setAnimation(google.maps.Animation.BOUNCE);
     }
-}
+};
 
 // First, provide request error and success messages based upon the presence of the 'google' variable
 var apiErrorGoogle = function() {

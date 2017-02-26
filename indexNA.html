@@ -22,7 +22,7 @@
         <form id="input-box">
             <p>SearchBar: <input type="search" placeholder="Item to Search..." data-bind="textInput: itemToSearch"></p>
         </form>
-        <ul class="list-group-item-info" id="list-item-box" data-bind="foreach: filteredPlaces">
+        <ul data-bind="foreach: filteredPlaces">
             <li class="list-group-item-info" data-bind="text: name, click: $parent.markerClick"></li>
         </ul>
         <div id="wiki-box">
