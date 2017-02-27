@@ -6,17 +6,12 @@
     <meta charset="utf-8">
     <meta name=viewport content="width=device-width, initial-scale=1">
     <!--ensuring device-responsive View-->
-    <link rel="stylesheet" type="text/css" src="css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="css/hood.css" />
-    <script src="js/knockout.js"></script>
-    <script src="js/jquery-1.12.3.js"></script>
+    <link rel="stylesheet" src="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" media="(max-width: 500px)" href="css/stylesmall.css">
 </head>
 
 <body>
-
-    <!-- To begin Search fxnality, replace zoom here with a KO text input bound to model, THAT invokes a fxn in viewModel (listFilter or the like) that filters and changes visibility.  Still needing this latter bit -->
-
-    <!-- refactoring View per KO element structure -->
 
     <div id="view-left">
         <form id="input-box">
@@ -26,15 +21,18 @@
             <li class="list-group-item-info" data-bind="text: name, click: $parent.markerClick"></li>
         </ul>
         <div id="wiki-box">
-            <span id="wiki-container"></span>
+            <span><p id="wikiElem" data-bind="html: wiki"></p></span>
         </div>
-    </div>
-    <div id="attribution-small">
-        <p>This page built with <a href="https://developers.google.com/maps/">Google Maps API</a><br>and the <a href="https://www.mediawiki.org/wiki/API:Main_page">Wikipedia API</a></p>
-        <p></p>
+        <div id="attribution-small">
+            <p>This page built with <a href="https://developers.google.com/maps/">Google Maps API</a><br>and the <a href="https://www.mediawiki.org/wiki/API:Main_page">Wikipedia API</a></p>
+            <p></p>
+        </div>
     </div>
 
     <div id="map"></div>
+
+    <script src="js/knockout.js"></script>
+    <script src="js/jquery-1.12.3.js"></script>
     <script src='js/scriptNA.js'></script>
 
     <!-- map should be called only once, meaning use KO for anything subject to changing state(the listView), so that page reloads are not required -->
