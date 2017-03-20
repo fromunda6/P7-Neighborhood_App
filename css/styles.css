@@ -7,6 +7,11 @@ html,body {
   background-color: #7f2020;
 }
 
+#header {
+  height: 20%
+  background-color: red;
+}
+
 #input-box {
   background-color: #d8eaf5;
   border-radius: 0.25em;
