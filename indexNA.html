@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Steamboat Springs - Hidden Gems</title>
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <!--ensuring device-responsive View-->
+    <link rel="stylesheet" src="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" media="(max-width: 500px)" href="css/stylesmall.css">
+</head>
+
+<body>
+
+    <div id="view-left">
+        <form id="input-box">
+            <p>SearchBar: <input type="search" placeholder="Item to Search..." data-bind="textInput: itemToSearch"></p>
+        </form>
+        <ul data-bind="foreach: filteredPlaces">
+            <li class="list-group-item-info" data-bind="text: name, click: $parent.markerClick"></li>
+        </ul>
+        <div id="wiki-box">
+            <span><p id="wikiElem" data-bind="html: wiki"></p></span>
+        </div>
+        <div id="attribution-small">
+            <p>This page built with <a href="https://developers.google.com/maps/">Google Maps API</a><br>and the <a href="https://www.mediawiki.org/wiki/API:Main_page">Wikipedia API</a></p>
+            <p></p>
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="js/knockout.js"></script>
+    <script src="js/jquery-1.12.3.js"></script>
+    <script src='js/scriptNA.js'></script>
+
+    <!-- map should be called only once, meaning use KO for anything subject to changing state(the listView), so that page reloads are not required -->
+    <!-- request Google map and refer to error handling fxn-->
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_-Q0o2kdn0UZlP3yLWnEcXIPWQk0dSA&v=3&callback=initMap" onerror="apiErrorGoogle()">
+    </script>
+
+</body>
+
+</html>
